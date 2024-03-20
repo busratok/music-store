@@ -7,6 +7,9 @@ const {
   Products,
 } = require("../controllers/products.controller");
 
+router.route("/").get(Products.list);
+router.route("/:id").get(Products.read);
+
 router.route("/categories").get(ProductCategories.list);
 router.route("/categories/:categoryId").get(ProductCategories.read);
 
