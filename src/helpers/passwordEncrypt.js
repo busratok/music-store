@@ -8,7 +8,7 @@ const keyCode = process.env.SECRET_KEY,
   encType = "sha512";
 
 module.exports = function (password) {
-  crypto
+  return crypto
     .pbkdf2Sync(password, keyCode, loopCount, charCount, encType)
     .toString("hex");
 };
