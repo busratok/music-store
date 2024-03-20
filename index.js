@@ -17,11 +17,13 @@ const PORT = process.env.PORT || 8000;
 /** DB Connection */
 require("./src/config/dbConnection");
 
+//Routes
 app.all("/", (req, res) => {
   res.send("Welcome");
 });
 
 app.use("/products", require("./src/routes/products.router"));
+app.use("/users", require("./src/routes/user.router"));
 
 app.use(require("./src/middlewares/errorHandler"));
 
