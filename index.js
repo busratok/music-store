@@ -21,4 +21,8 @@ app.all("/", (req, res) => {
   res.send("Welcome");
 });
 
+app.use("/products", require("./src/routes/products.router"));
+
+app.use(require("./src/middlewares/errorHandler"));
+
 app.listen(PORT, () => console.log(`running on: http://127.0.0.1:${PORT}`));
