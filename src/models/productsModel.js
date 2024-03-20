@@ -7,8 +7,9 @@ const productCategoriesSchema = new mongoose.Schema(
   {
     name: {
       type: String,
+      enum: ["guitar", "piano", "headphones"],
       required: true,
-      unique: true,
+
       trim: true,
     },
   },
