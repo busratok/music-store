@@ -25,6 +25,8 @@ router
   .put(ProductCategories.update)
   .delete(ProductCategories.delete);
 
+router.get("/categories/:categoryId/products", ProductCategories.products);
+
 router.route("/users").get(User.list);
 
 module.exports = router;

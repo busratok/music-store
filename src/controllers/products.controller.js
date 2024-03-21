@@ -28,20 +28,30 @@ module.exports.ProductCategories = {
   },
   update: async (req, res) => {
     const result = await ProductCategories.updateOne(
-      { _id: req.body.id },
+      { _id: req.body?.categoryId },
       req.body,
       { runValidators: true }
     );
     res.status(202).send({
       isError: false,
       body: req.body,
-      newData: await ProductCategories.findOne({ _id: req.params?.id }),
+      newData: await ProductCategories.findOne({ _id: req.params?.categoryId }),
       result,
     });
   },
   delete: async (req, res) => {
-    const data = await ProductCategories.deleteOne({ _id: req.params?.id });
+    const data = await ProductCategories.deleteOne({
+      _id: req.params?.categoryId,
+    });
     res.sendStatus(data.deletedCount ? 204 : 404);
+  },
+  products: async (req, res) => {
+    const data = await Products.find({ category: req.params?.categoryId });
+    res.status(200).send({
+      isError: false,
+      data,
+      message: "hello",
+    });
   },
 };
 
