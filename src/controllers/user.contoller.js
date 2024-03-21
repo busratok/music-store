@@ -38,4 +38,47 @@ module.exports = {
     const data = await User.deleteOne({ _id: req.params?.id });
     res.sendStatus(data.deletedCount ? 204 : 404);
   },
+  login: async (req, res) => {
+    const { email, password } = req.body;
+
+    if (email && password) {
+      // const user = await User.findOne({ email: email })
+      const user = await User.findOne({ email });
+      console.log(user);
+
+      if (user && user.password == passwordEncrypt(password)) {
+        /* SESSION */
+        // req.session = {
+        //     email: user.email,
+        //     password: user.password
+        // }
+        // req.session.email = user.email
+        console.log(user.id);
+        req.session.id = user.id;
+        req.session.password = user.password;
+        console.log(req.session.id);
+        /* SESSION */
+
+        /* COOKIE */
+        if (req.body?.remindMe) {
+          req.session.remindMe = req.body.remindMe;
+          // SET maxAge:
+          req.sessionOptions.maxAge = 1000 * 60 * 60 * 24 * 3; // 3 days
+        }
+        /* COOKIE */
+
+        res.status(200).send({
+          error: false,
+          message: "Login OK",
+          user,
+        });
+      } else {
+        res.errorStatusCode = 401;
+        throw new Error("Login parameters are not true.");
+      }
+    } else {
+      res.errorStatusCode = 401;
+      throw new Error("Email and password are required.");
+    }
+  },
 };
