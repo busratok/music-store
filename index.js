@@ -17,6 +17,14 @@ const PORT = process.env.PORT || 8000;
 /** DB Connection */
 require("./src/config/dbConnection");
 
+const session = require("cookie-session");
+app.use(
+  session({
+    secret: process.env.SECRET_KEY, // Şifreleme anahtarı
+    // maxAge: 1000 * 60 * 60 * 24 * 3  // miliseconds // 3 days
+  })
+);
+
 //Routes
 app.all("/", (req, res) => {
   res.send("Welcome");
