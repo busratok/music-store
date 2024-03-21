@@ -36,6 +36,11 @@ app.all("/", (req, res) => {
 
 app.use("/products", require("./src/routes/products.router"));
 app.use("/users", require("./src/routes/user.router"));
+app.use(
+  "/admin",
+  require("./src/middlewares/auth"),
+  require("./src/routes/admin.router")
+);
 
 app.use(require("./src/middlewares/errorHandler"));
 
