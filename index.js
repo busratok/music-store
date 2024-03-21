@@ -17,6 +17,7 @@ const PORT = process.env.PORT || 8000;
 /** DB Connection */
 require("./src/config/dbConnection");
 
+// Session Cookies
 const session = require("cookie-session");
 app.use(
   session({
@@ -24,6 +25,9 @@ app.use(
     // maxAge: 1000 * 60 * 60 * 24 * 3  // miliseconds // 3 days
   })
 );
+
+//Middlewares
+app.use(require("./src/middlewares/loginCheck"));
 
 //Routes
 app.all("/", (req, res) => {
