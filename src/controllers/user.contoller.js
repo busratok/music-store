@@ -42,21 +42,11 @@ module.exports = {
     const { email, password } = req.body;
 
     if (email && password) {
-      // const user = await User.findOne({ email: email })
       const user = await User.findOne({ email });
-      console.log(user);
-
       if (user && user.password == passwordEncrypt(password)) {
         /* SESSION */
-        // req.session = {
-        //     email: user.email,
-        //     password: user.password
-        // }
-        // req.session.email = user.email
-        console.log(user.id);
         req.session.id = user.id;
         req.session.password = user.password;
-        console.log(req.session.id);
         /* SESSION */
 
         /* COOKIE */
