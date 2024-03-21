@@ -26,12 +26,14 @@ module.exports = {
     });
   },
   update: async (req, res) => {
-    const data = await User.updateOne({ _id: req.params.id }, req.body, {
+    const result = await User.updateOne({ _id: req.params.id }, req.body, {
       runValidators: true,
     });
     res.status(201).send({
       isError: false,
-      data,
+      body: req.body,
+      newData: await User.findOne({ _id: req.params?.id }),
+      result,
     });
   },
   delete: async (req, res) => {
