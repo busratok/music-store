@@ -8,6 +8,9 @@ module.exports = async (req, res, next) => {
     const user = await User.findOne({ _id: id });
     if (user && user.password == password) {
       req.isLogin = true;
+      if (user.email == "admin@aa.com") {
+        req.isAdmin = true;
+      }
     } else {
       req.session = null;
       req.isLogin = false;
