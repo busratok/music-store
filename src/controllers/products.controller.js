@@ -89,7 +89,7 @@ module.exports.Products = {
     });
   },
   update: async (req, res) => {
-    const result = await Products.updateOne({ _id: req.body.id }, req.body, {
+    const result = await Products.updateOne({ _id: req.params?.id }, req.body, {
       runValidators: true,
     });
     res.status(202).send({
