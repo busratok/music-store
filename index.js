@@ -27,6 +27,7 @@ app.use(
 );
 
 //Middlewares
+app.use(require("./src/middlewares/queryHandler"));
 app.use(require("./src/middlewares/loginCheck"));
 app.use(require("./src/middlewares/cors"));
 

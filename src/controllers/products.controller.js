@@ -4,9 +4,10 @@ const { ProductCategories, Products } = require("../models/productsModel");
 
 module.exports.ProductCategories = {
   list: async (req, res) => {
-    const data = await ProductCategories.find();
+    const data = await res.getModelList(ProductCategories);
     res.status(200).send({
       isError: false,
+      details: await res.getModelListDetails(ProductCategories),
       data,
     });
   },
@@ -46,9 +47,16 @@ module.exports.ProductCategories = {
     res.sendStatus(data.deletedCount ? 204 : 404);
   },
   products: async (req, res) => {
-    const data = await Products.find({ category: req.params?.categoryId });
+    const data = await res.getModelList(
+      Products,
+      { category: req.params?.categoryId },
+      "category"
+    );
     res.status(200).send({
       isError: false,
+      details: await res.getModelListDetails(Products, {
+        category: req.params?.categoryId,
+      }),
       data,
       message: "hello",
     });
@@ -57,9 +65,10 @@ module.exports.ProductCategories = {
 
 module.exports.Products = {
   list: async (req, res) => {
-    const data = await Products.find();
+    const data = await res.getModelList(Products, {}, "category");
     res.status(200).send({
       isError: false,
+      details: await res.getModelListDetails(Products),
       data,
     });
   },
@@ -71,7 +80,9 @@ module.exports.Products = {
     });
   },
   read: async (req, res) => {
-    const data = await Products.findOne({ _id: req.params?.id });
+    const data = await Products.findOne({ _id: req.params?.id }).populate(
+      "category"
+    );
     res.status(202).send({
       isError: false,
       data,
