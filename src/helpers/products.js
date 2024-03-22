@@ -100,4 +100,4 @@ module.exports.products = [
   },
 ];
 
-const categories = ["guitar", "piano", "headphones"];
+module.exports.categories = ["guitar", "piano", "headphones"];

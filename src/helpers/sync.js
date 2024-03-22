@@ -1,9 +1,23 @@
 "use strict";
 
-const { products } = require("./src/helpers/products");
-const { ProductCategories, Products } = require("./src/models/productsModel");
+const { products, categories } = require("./products");
+const { ProductCategories, Products } = require("../models/productsModel");
+const User = require("../models/userModel");
 
 module.exports = async () => {
+  await ProductCategories.deleteMany().then(() =>
+    console.log(" - Categories Deleted All")
+  );
+  await Products.deleteMany().then(() =>
+    console.log(" - Products Deleted All")
+  );
+
+  await User.deleteMany().then(() => console.log(" - Users deleted"));
+
+  for (const category of categories) {
+    await ProductCategories.create({ name: category });
+  }
+
   const productCategories = await ProductCategories.find();
   console.log(productCategories);
 
@@ -17,6 +31,10 @@ module.exports = async () => {
     }
     Products.create(product);
   });
+  // console.log(await Products.find());
+
+  await User.create({ email: "admin@aa.com", password: "admin" });
+  console.log(await User.find());
 
   console.log("sync");
 };
