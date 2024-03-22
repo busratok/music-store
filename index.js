@@ -28,6 +28,7 @@ app.use(
 
 //Middlewares
 app.use(require("./src/middlewares/loginCheck"));
+app.use(require("./src/middlewares/cors"));
 
 //Routes
 app.all("/", (req, res) => {
